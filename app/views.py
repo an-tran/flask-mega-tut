@@ -3,7 +3,7 @@ from flask import render_template, flash, redirect
 from flask import request
 from flask import session
 from flask import url_for
-from flask.ext.login import login_user, current_user, login_required
+from flask.ext.login import login_user, current_user, login_required, logout_user
 
 from app import app, lm, oid, db
 from app.models import User
@@ -83,3 +83,8 @@ def after_login(resp):
     print "after_login", user, user.is_active()
     login_user(user, remember_me)
     return redirect(request.args.get('next') or url_for('index'))
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
